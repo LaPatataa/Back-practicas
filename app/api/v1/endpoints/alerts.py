@@ -26,8 +26,6 @@ async def stock_min_alerts(
     if only_active:
         params["activo"] = "eq.true"
 
-    # PostgREST no permite comparar columnas directamente en filtro (stock_actual <= stock_minimo)
-    # Entonces traemos y filtramos en backend (suficiente para MVP)
     resp = await supabase_get("/insumo", access_token=token, params=params)
     if resp.status_code != 200:
         raise HTTPException(status_code=resp.status_code, detail=resp.text)
